@@ -147,8 +147,8 @@ class PageLunchMenusList extends BaseModel {
         return array_map( function ( $item ) {
                 return [
                     'title'       => $item->post_title,
-                    'start'       => date('j.n.', strtotime( get_field( 'start_datetime', $item->ID ) ) ),
-                    'end'         => date('j.n.Y', strtotime( get_field( 'end_datetime', $item->ID ) ) ),
+                    'start'       => date( 'j.n.', strtotime( get_field( 'start_datetime', $item->ID ) ) ),
+                    'end'         => date( 'j.n.Y', strtotime( get_field( 'end_datetime', $item->ID ) ) ),
                     'description' => get_field( 'description', $item->ID ),
                     'days'        => self::format_lunch_menu( get_field( 'days', $item->ID ) ?: [] ),
                 ];
@@ -172,8 +172,8 @@ class PageLunchMenusList extends BaseModel {
         return array_map( function ( $day ) use ( $days ) {
 
                 $locale = \get_locale();
-                $date_formatter = new IntlDateFormatter( $locale, IntlDateFormatter::FULL, IntlDateFormatter::NONE);
-                $date_formatter->setPattern('EEEE d.M.');
+                $date_formatter = new IntlDateFormatter( $locale, IntlDateFormatter::FULL, IntlDateFormatter::NONE );
+                $date_formatter->setPattern( 'EEEE d.M.' );
 
                 // Get the current date as a string with the day of the week
                 $day_of_week = $date_formatter->format( new \DateTime( $day['days'] ) );
@@ -230,7 +230,7 @@ class PageLunchMenusList extends BaseModel {
             $layout['partial'] = 'layout-' . $layout_name . '.dust';
 
             $handled[] = apply_filters(
-                "tms/acf/layout/${acf_layout}/data",
+                "tms/acf/layout/{$acf_layout}/data",
                 $layout
             );
         }

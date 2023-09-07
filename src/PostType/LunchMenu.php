@@ -270,7 +270,7 @@ class LunchMenu {
             $description = ( new Field\Textarea( $strings['description']['label'] ) )
                 ->set_key( "{$key}_description" )
                 ->set_name( 'description' )
-                ->set_new_lines('br')
+                ->set_new_lines( 'br' )
                 ->set_instructions( $strings['description']['instructions'] );
 
             $days = ( new Field\Repeater( $strings['days']['label'] ) )
@@ -291,13 +291,13 @@ class LunchMenu {
             $foods = ( new Field\Textarea( $strings['days']['foods']['label'] ) )
                 ->set_key( "{$key}_foods" )
                 ->set_name( 'foods' )
-                ->set_new_lines('br')
+                ->set_new_lines( 'br' )
                 ->set_instructions( $strings['days']['foods']['instructions'] );
 
             $food_description = ( new Field\Textarea( $strings['days']['food_description']['label'] ) )
                 ->set_key( "{$key}_food_description" )
                 ->set_name( 'food_description' )
-                ->set_new_lines('br')
+                ->set_new_lines( 'br' )
                 ->set_instructions( $strings['days']['food_description']['instructions'] );
 
             $link = ( new Field\Link( $strings['days']['link']['label'] ) )
