@@ -1,0 +1,89 @@
+{>"shared/base" /}
+
+{<content}
+    <main class="main-content" id="main-content">
+        {?PageLunchMenusList.hero_image}
+            {>"views/page/page-hero" /}
+        {/PageLunchMenusList.hero_image}
+
+        <section class="section {?Header.hero_image}pt-7{:else}{?Header.breadcrumbs}pt-0{:else}pt-10{/Header.breadcrumbs}{/Header.hero_image}">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-12">
+                        <article class="entry">
+                             {>"ui/entry-title" class="mt-0 has-text-centered" hero_image=Page.hero_image /}
+                            <div class="entry__content is-content-grid keep-vertical-spacing">
+                                {@content /}
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {>"ui/components" components=PageLunchMenusList.components /}
+
+        {#PageLunchMenusList}
+        <section class="section pt-0 mt-1">
+            <div class="container">
+                {?lunch_menus.items}
+                    {#lunch_menus.items}
+                        {?days}
+
+                            <hr class="mt-0 mb-8" />
+
+                            <div class="column is-6 is-offset-3 pt-0 pb-0 has-text-centered">
+                                <h2>{lunch_menu_title|kses} {start|kses} - {end|kses}</h2>
+                                {?description}
+                                    <div class="mt-5">
+                                        <p>{description|kses}</p>
+                                    </div>
+                                {/description}
+                                {#days}
+                                    <div class="{?is_last}mb-8{/is_last}">
+                                        <div class="mt-5">
+                                            <h6 class="is-capitalized mb-0 mt-6">{day|kses}</h6>
+                                        </div>
+                                        {?foods}
+                                            <div class="mt-5">
+                                                <p>{foods|kses}</p>
+                                            </div>
+                                        {/foods}
+                                        {?description}
+                                            <div class="mt-5">
+                                                <p class="has-text-small mb-0">{description|kses}</p>
+                                            </div>
+                                        {/description}
+                                        {?link}
+                                            <div class="mt-2">
+                                                <p class="has-text-small">{additional_information_link|kses}: <a href="{link.url|url}">{link.url|url}</a></p>
+                                            </div>
+                                        {/link}
+                                        {^is_last}
+                                            <hr class="mt-6"/>
+                                        {/is_last}
+                                    </div>
+                                {/days}
+                            </div>
+                        {/days}
+                    {/lunch_menus.items}
+                {:else}
+                    <div class="columns mb-5">
+                        <div class="column is-6 is-offset-3 pt-0 pb-0 has-text-centered">
+                            aaa{no_results|kses}
+                        </div>
+                    </div>
+                {/lunch_menus.items}
+            </div>
+        </section>
+        {/PageLunchMenusList}
+
+        {#PageLunchMenusList}
+            {?post_siblings}
+                {>"ui/sibling-navigation" /}
+            {/post_siblings}
+        {/PageLunchMenusList}
+
+    </main>
+{/content}
+

@@ -1,0 +1,22 @@
+<div class="content-columns__item mt-6 mb-6 columns is-vcentered ">
+    <div class="column is-6 is-5-desktop is-offset-1-desktop">
+        <div class="image">
+            {?image}
+                {@image id=image.id size="medium" class="objectfit-image" alt="" /}
+            {/image}
+        </div>
+    </div>
+    <div class="column is-6 is-5-desktop">
+        <div class="content-columns__description mt-6 keep-vertical-spacing">
+            <h3>Tänään lounaaksi</h3>
+            {?menu.foods}
+                <p>{menu.foods|kses}</p>
+            {/menu.foods}
+            {?link}
+                <a class="button m-2 button--icon" href="{link.url|url}" href="{link.target|attr}">
+                    {link.title|kses}
+                </a>
+            {/link}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TMS Materials\n"
+"POT-Creation-Date: 2023-09-06 15:07+0300\n"
+"PO-Revision-Date: 2021-06-15 11:22+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#: src/Fields/PageLunchMenusFieldGroup.php:37
+msgctxt "plugin ACF"
+msgid "Lounaslistan asetukset"
+msgstr ""
+
+#: src/Fields/PageLunchMenusFieldGroup.php:88
+msgctxt "plugin ACF"
+msgid "Lounasmenu"
+msgstr ""
+
+#: src/Models/page-lunch-menus-list.php:33
+msgid "Lunch menu"
+msgstr ""
+
+#: src/Models/page-lunch-menus-list.php:42
+msgid "Additional information link"
+msgstr ""
+
+#: src/Models/page-lunch-menus-list.php:51
+msgid "No results"
+msgstr ""
+
+#: src/Plugin.php:208
+msgid "Lounaslista"
+msgstr ""
+
+#: src/PostType/LunchMenu.php:65
+msgctxt "theme CPT"
+msgid "lunch-menu"
+msgstr ""
+
+#: src/PostType/LunchMenu.php:158
+msgctxt "theme ACF"
+msgid "Tiedot"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "TMS Lunch Menus"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/devgeniem/tms-plugin-lunch-menus"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "TMS Lunch Menus list"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Hion Digital Oy"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.hiondigital.com/"
+msgstr ""

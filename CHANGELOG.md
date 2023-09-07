@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][keep-changelog]
 and this project adheres to [Semantic Versioning][semver].
 
+## [1.0.0] - 2023-09-07
+
+- TMS-962: First stable version.
+
 ## [0.0.1] - 2021-01-01
 
 ### Added
