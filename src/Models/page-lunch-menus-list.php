@@ -80,8 +80,8 @@ class PageLunchMenusList extends BaseModel {
         $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
         $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
 
-        if( $week_count > 1 ) {
-            $days   = ( $week_count - 1 ) * 7  + 6;
+        if ( $week_count > 1 ) {
+            $days   = ( $week_count - 1 ) * 7 + 6;
             $sunday = date( 'Y-m-d', strtotime( $monday . "+{$days} days" ) );
         }
 
@@ -89,7 +89,7 @@ class PageLunchMenusList extends BaseModel {
             'post_type'          => PostType\LunchMenu::SLUG,
             'orderby'            => [
                 'start_datetime' => 'ASC',
-                'post_date'      => 'DESC'
+                'post_date'      => 'DESC',
             ],
             'posts_per_page' => 200, // phpcs:ignore
             'meta_query'     => [
@@ -105,7 +105,7 @@ class PageLunchMenusList extends BaseModel {
                     'value'   => $sunday,
                     'compare' => '<=',
                     'type'    => 'DATE',
-                ]
+                ],
             ],
         ];
 
@@ -119,12 +119,12 @@ class PageLunchMenusList extends BaseModel {
         $week_number  = null;
         $week_numbers = [];
 
-        foreach( $query->posts as $post ) {
+        foreach ( $query->posts as $post ) {
 
             $week_number    = date( 'W', strtotime( get_field( 'start_datetime', $post ) ) );
 
             // If there are more than 1 lunch menu for the same week, we will skip rest of those.
-            if( in_array( $week_number, $week_numbers ) ) {
+            if ( in_array( $week_number, $week_numbers ) ) {
                 continue;
             }
 
@@ -136,9 +136,9 @@ class PageLunchMenusList extends BaseModel {
     }
 
     /**
-     * Format files.
+     * Format lunch menu items.
      *
-     * @param array $material_ids Material IDs.
+     * @param array $items lunch menu items.
      *
      * @return array
      */
@@ -157,15 +157,15 @@ class PageLunchMenusList extends BaseModel {
     }
 
     /**
-     * Format files.
+     * Format days.
      *
-     * @param array $material_ids Material IDs.
+     * @param array $days Lunch menu days.
      *
      * @return array
      */
     public static function format_lunch_menu( array $days ) : array {
 
-        if( empty( $days ) ) {
+        if ( empty( $days ) ) {
             return [];
         }
 
