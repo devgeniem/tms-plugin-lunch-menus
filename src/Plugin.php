@@ -144,10 +144,8 @@ final class Plugin {
         );
         add_filter(
             'tms/acf/layout/lunch_menu/data',
-            \Closure::fromCallable( [ $this, 'format_accordion_file_data' ] )
+            \Closure::fromCallable( [ $this, 'format_lunch_menu_data' ] )
         );
-        //add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_public_scripts' ] );
-        //add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
     }
 
     /**
@@ -238,13 +236,13 @@ final class Plugin {
     }
 
     /**
-     * Format accordion file data.
+     * Format lunch menu file data.
      *
      * @param array $data Layout data.
      *
      * @return array
      */
-    protected function format_accordion_file_data( array $data ) : array {
+    protected function format_lunch_menu_data( array $data ) : array {
 
         $data['menu'] = static::get_menu_of_the_day();
 
@@ -278,7 +276,7 @@ final class Plugin {
                     'value'   => $sunday,
                     'compare' => '<=',
                     'type'    => 'DATE',
-                ]
+                ],
             ],
         ];
 
@@ -296,66 +294,13 @@ final class Plugin {
 
         $today = date( 'Y-m-d' );
 
-        foreach( $menus as $menu ) {
-            if( $menu['days'] === $today ) {
+        foreach ( $menus as $menu ) {
+            if ( $menu['days'] === $today ) {
                 return $menu;
             }
         }
 
         // No menu founds for current day.
         return [];
-    }
-
-    /**
-     * Enqueue public side scripts if they exist.
-     */
-    public function enqueue_public_scripts() {
-        if ( file_exists( $this->dist_path . 'public.js' ) ) {
-            wp_enqueue_script(
-                'boilerplate-public-js',
-                $this->dist_uri . 'public.js',
-                [ 'jquery' ],
-                $this->mod_time( 'public.js' ),
-                true
-            );
-        }
-    }
-
-    /**
-     * Enqueue admin side scripts if they exist.
-     */
-    public function enqueue_admin_scripts() {
-        if ( file_exists( $this->dist_path . 'admin.css' ) ) {
-            wp_enqueue_style(
-                'boilerplate-admin-css',
-                $this->dist_uri . 'admin.css',
-                [],
-                $this->mod_time( 'admin.css' ),
-                'all'
-            );
-        }
-
-        if ( file_exists( $this->dist_path . 'admin.js' ) ) {
-            wp_enqueue_script(
-                'boilerplate-admin-js',
-                $this->dist_uri . 'admin.js',
-                [ 'jquery' ],
-                $this->mod_time( 'admin.js' ),
-                true
-            );
-        }
-    }
-
-    /**
-     * Get cache busting modification time or plugin version.
-     *
-     * @param string $file File inside assets/dist/ folder.
-     *
-     * @return int|string
-     */
-    private function mod_time( $file = '' ) {
-        return file_exists( $this->dist_path . $file )
-            ? (int) filemtime( $this->dist_path . $file )
-            : $this->version;
     }
 }

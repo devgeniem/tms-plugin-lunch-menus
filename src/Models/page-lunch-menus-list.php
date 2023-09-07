@@ -77,8 +77,8 @@ class PageLunchMenusList extends BaseModel {
 
         $week_count = (int) get_field( 'week_count', \get_the_ID() );
 
-        $monday = date( 'Y-m-d', strtotime('monday this week') );
-        $sunday = date( 'Y-m-d', strtotime('sunday this week') );
+        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
+        $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
 
         if( $week_count > 1 ) {
             $days   = ( $week_count - 1 ) * 7  + 6;
