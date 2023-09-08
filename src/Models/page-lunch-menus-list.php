@@ -75,38 +75,66 @@ class PageLunchMenusList extends BaseModel {
      */
     protected function get_lunch_menus() : array {
 
-        $week_count = (int) get_field( 'week_count', \get_the_ID() );
+        $posts       = $this->get_lunch_posts();
+        $dates       = $this->lunch_menu_dates();
+        $lunch_menus = [];
 
-        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
-        $sunday = date( 'Y-m-d', strtotime( 'sunday this week' ) );
-
-        if ( $week_count > 1 ) {
-            $days   = ( $week_count - 1 ) * 7 + 6;
-            $sunday = date( 'Y-m-d', strtotime( $monday . "+{$days} days" ) );
+        if ( empty( $posts ) ) {
+            return [];
         }
 
+        foreach ( $dates as $date ) {
+            foreach ( $posts as $post ) {
+                $start_datetime = get_field( 'start_datetime', $post );
+                $end_datetime   = get_field( 'end_datetime', $post );
+
+                if ( $date >= $start_datetime && $date <= $end_datetime ) {
+
+                    if( ! isset( $lunch_menus[ $date ] ) ) {
+                        $lunch_menus[ $date ] = [];
+                    }
+
+                    $lunch_menus[ $date ][] = $post;
+                }
+            }
+        }
+
+        $lunch_menus = array_map( function ( $lunch_menu ) {
+            return $lunch_menu[0];
+        }, $lunch_menus );
+
+        return $lunch_menus;
+    }
+
+    /**
+     * Get current date(s) depending week setting.
+     *
+     * @return array
+     */
+    public function lunch_menu_dates() {
+        $week_count = (int) get_field( 'week_count', \get_the_ID() );
+
+        if ( $week_count === 1 ) {
+            $date[] = date( 'Y-m-d' );
+        } else {
+            for ($i = 0; $i < $week_count; $i++ ) {
+                $dates[] = date( 'Y-m-d', strtotime( "+$i week" ) );
+            }
+        }
+
+        return $dates;
+    }
+
+    /**
+     * Get lunch menu posts.
+     *
+     * @return array
+     */
+    public function get_lunch_posts() {
         $args = [
             'post_type'          => PostType\LunchMenu::SLUG,
-            'orderby'            => [
-                'start_datetime' => 'ASC',
-                'post_date'      => 'DESC',
-            ],
-            'posts_per_page' => 200, // phpcs:ignore
-            'meta_query'     => [
-                'relation' => 'AND',
-                [
-                    'key'     => 'start_datetime',
-                    'value'   => $monday,
-                    'compare' => '>=',
-                    'type'    => 'DATE',
-                ],
-                [
-                    'key'     => 'end_datetime',
-                    'value'   => $sunday,
-                    'compare' => '<=',
-                    'type'    => 'DATE',
-                ],
-            ],
+            'orderby'            => 'post_date',
+            'posts_per_page' => 999, // phpcs:ignore
         ];
 
         $query = new \WP_Query( $args );
@@ -115,24 +143,7 @@ class PageLunchMenusList extends BaseModel {
             return [];
         }
 
-        $posts        = [];
-        $week_number  = null;
-        $week_numbers = [];
-
-        foreach ( $query->posts as $post ) {
-
-            $week_number    = date( 'W', strtotime( get_field( 'start_datetime', $post ) ) );
-
-            // If there are more than 1 lunch menu for the same week, we will skip rest of those.
-            if ( in_array( $week_number, $week_numbers ) ) {
-                continue;
-            }
-
-            $week_numbers[] = $week_number;
-            $posts[]        = $post;
-        }
-
-        return $posts;
+        return $query->posts;
     }
 
     /**
