@@ -70,7 +70,7 @@
                 {:else}
                     <div class="columns mb-5">
                         <div class="column is-6 is-offset-3 pt-0 pb-0 has-text-centered">
-                            aaa{no_results|kses}
+                            {no_results|kses}
                         </div>
                     </div>
                 {/lunch_menus.items}
