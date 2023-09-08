@@ -90,7 +90,7 @@ class PageLunchMenusList extends BaseModel {
 
                 if ( $date >= $start_datetime && $date <= $end_datetime ) {
 
-                    if( ! isset( $lunch_menus[ $date ] ) ) {
+                    if ( ! isset( $lunch_menus[ $date ] ) ) {
                         $lunch_menus[ $date ] = [];
                     }
 
@@ -116,8 +116,9 @@ class PageLunchMenusList extends BaseModel {
 
         if ( $week_count === 1 ) {
             $date[] = date( 'Y-m-d' );
-        } else {
-            for ($i = 0; $i < $week_count; $i++ ) {
+        }
+        else {
+            for ( $i = 0; $i < $week_count; $i++ ) {
                 $dates[] = date( 'Y-m-d', strtotime( "+$i week" ) );
             }
         }
