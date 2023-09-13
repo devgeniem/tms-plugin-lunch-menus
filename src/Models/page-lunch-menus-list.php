@@ -115,7 +115,7 @@ class PageLunchMenusList extends BaseModel {
         $week_count = (int) get_field( 'week_count', \get_the_ID() );
 
         if ( $week_count === 1 ) {
-            $date[] = date( 'Y-m-d' );
+            $dates[] = date( 'Y-m-d' );
         }
         else {
             for ( $i = 0; $i < $week_count; $i++ ) {
