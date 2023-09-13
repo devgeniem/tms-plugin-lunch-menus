@@ -8,6 +8,7 @@ namespace TMS\Plugin\LunchMenus;
 use TMS\Plugin\LunchMenus\PostType\LunchMenu;
 use TMS\Plugin\LunchMenus\Layouts\LunchMenuLayout;
 use TMS\Plugin\LunchMenus\Fields\PageLunchMenusFieldGroup;
+use TMS\Plugin\LunchMenus\Blocks\LunchMenuBlock;
 
 /**
  * Class Plugin
@@ -164,6 +165,7 @@ final class Plugin {
      */
     protected function init_classes() {
         ( new LunchMenu() );
+        ( new LunchMenuBlock() );
         ( new PageLunchMenusFieldGroup() );
     }
 
@@ -244,7 +246,8 @@ final class Plugin {
      */
     protected function format_lunch_menu_data( array $data ) : array {
 
-        $data['menu'] = static::get_menu_of_the_day();
+        $data['menu']       = static::get_menu_of_the_day();
+        $data['no_results'] = __( 'No results', 'tms-plugin-lunch-menus' );
 
         return $data;
     }
