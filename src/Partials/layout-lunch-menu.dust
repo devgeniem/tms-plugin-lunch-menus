@@ -1,22 +1,28 @@
-<div class="content-columns__item mt-6 mb-6 columns is-vcentered ">
-    <div class="column is-6 is-5-desktop is-offset-1-desktop">
-        <div class="image">
+<div class="section content-columns">
+    <div class="container keep-vertical-spacing">
+        <div class="content-columns__item mt-6 mb-6 columns is-vcentered ">
             {?image}
-                {@image id=image.id size="medium" class="objectfit-image" alt="" /}
+                <div class="column is-6 is-5-desktop is-offset-1-desktop">
+                    <div class="image">
+                        {@image id=image.id size="medium" class="objectfit-image" /}
+                    </div>
+                </div>
             {/image}
-        </div>
-    </div>
-    <div class="column is-6 is-5-desktop">
-        <div class="content-columns__description mt-6 keep-vertical-spacing">
-            <h3>Tänään lounaaksi</h3>
-            {?menu.foods}
-                <p>{menu.foods|kses}</p>
-            {/menu.foods}
-            {?link}
-                <a class="button m-2 button--icon" href="{link.url|url}" href="{link.target|attr}">
-                    {link.title|kses}
-                </a>
-            {/link}
+            <div class="column is-6 is-5-desktop">
+                <h3 class="content-columns__title h3 mt-0-desktop">Tänään lounaaksi</h3>
+                <div class="content-columns__description mt-6 keep-vertical-spacing">
+                    {?menu.foods}
+                        <p>{menu.foods|kses}</p>
+                    {:else}
+                        <p>{no_results|kses}</p>
+                    {/menu.foods}
+                    {?menu.link}
+                        <a class="button m-2 button--icon" href="{menu.link.url|url}" href="{menu.link.target|attr}">
+                            {menu.link.title|kses}
+                        </a>
+                    {/menu.link}
+                </div>
+            </div>
         </div>
     </div>
 </div>

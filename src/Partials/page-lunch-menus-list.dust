@@ -42,7 +42,7 @@
                                 {#days}
                                     <div class="{?is_last}mb-8{/is_last}">
                                         <div class="mt-5">
-                                            <h6 class="is-capitalized mb-0 mt-6">{day|kses}</h6>
+                                            <h3 class="h3 is-capitalized mb-0 mt-6">{day|kses}</h3>
                                         </div>
                                         {?foods}
                                             <div class="mt-5">
@@ -56,7 +56,7 @@
                                         {/description}
                                         {?link}
                                             <div class="mt-2">
-                                                <p class="has-text-small">{additional_information_link|kses}: <a href="{link.url|url}">{link.url|url}</a></p>
+                                                <p class="has-text-small">{additional_information_link|kses}: <a href="{link.url|url}">{link.title|html}</a></p>
                                             </div>
                                         {/link}
                                         {^is_last}
