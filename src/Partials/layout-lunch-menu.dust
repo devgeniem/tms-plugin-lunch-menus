@@ -16,11 +16,11 @@
                     {:else}
                         <p>{no_results|kses}</p>
                     {/menu.foods}
-                    {?menu.link}
-                        <a class="button m-2 button--icon" href="{menu.link.url|url}" href="{menu.link.target|attr}">
-                            {menu.link.title|kses}
+                    {?link}
+                        <a class="button m-2 button--icon" href="{link.url|url}" href="{link.target|attr}">
+                            {link.title|kses}
                         </a>
-                    {/menu.link}
+                    {/link}
                 </div>
             </div>
         </div>
