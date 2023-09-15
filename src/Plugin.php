@@ -3,12 +3,17 @@
  * Copyright (c) 2021 Geniem Oy.
  */
 
-namespace Tms\Plugin\Boilerplate;
+namespace TMS\Plugin\LunchMenus;
+
+use TMS\Plugin\LunchMenus\PostType\LunchMenu;
+use TMS\Plugin\LunchMenus\Layouts\LunchMenuLayout;
+use TMS\Plugin\LunchMenus\Fields\PageLunchMenusFieldGroup;
+use TMS\Plugin\LunchMenus\Blocks\LunchMenuBlock;
 
 /**
  * Class Plugin
  *
- * @package Tms\Plugin\Boilerplate
+ * @package TMS\Plugin\LunchMenus
  */
 final class Plugin {
 
@@ -128,60 +133,177 @@ final class Plugin {
      * Add plugin hooks and filters.
      */
     protected function hooks() {
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_public_scripts' ] );
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
+        add_action( 'init', \Closure::fromCallable( [ $this, 'load_localization' ] ), 0 );
+        add_action( 'init', \Closure::fromCallable( [ $this, 'init_classes' ] ), 0 );
+        add_filter( 'dustpress/models', \Closure::fromCallable( [ $this, 'dustpress_models' ] ) );
+        add_filter( 'dustpress/partials', \Closure::fromCallable( [ $this, 'dustpress_partials' ] ) );
+        add_filter( 'page_template', \Closure::fromCallable( [ $this, 'register_page_template_path' ] ) );
+        add_filter( 'theme_page_templates', \Closure::fromCallable( [ $this, 'register_page_template' ] ) );
+        add_filter(
+            'tms/acf/field/fg_page_components_components/layouts',
+            \Closure::fromCallable( [ $this, 'append_lunch_menu_layout' ] )
+        );
+        add_filter(
+            'tms/acf/layout/lunch_menu/data',
+            \Closure::fromCallable( [ $this, 'format_lunch_menu_data' ] )
+        );
     }
 
     /**
-     * Enqueue public side scripts if they exist.
+     * Load plugin localization
      */
-    public function enqueue_public_scripts() {
-        if ( file_exists( $this->dist_path . 'public.js' ) ) {
-            wp_enqueue_script(
-                'boilerplate-public-js',
-                $this->dist_uri . 'public.js',
-                [ 'jquery' ],
-                $this->mod_time( 'public.js' ),
-                true
-            );
-        }
+    public function load_localization() {
+        \load_plugin_textdomain(
+            'tms-plugin-lunch-menus',
+            false,
+            dirname( plugin_basename( __DIR__ ) ) . '/languages/'
+        );
     }
 
     /**
-     * Enqueue admin side scripts if they exist.
+     * Init classes
      */
-    public function enqueue_admin_scripts() {
-        if ( file_exists( $this->dist_path . 'admin.css' ) ) {
-            wp_enqueue_style(
-                'boilerplate-admin-css',
-                $this->dist_uri . 'admin.css',
-                [],
-                $this->mod_time( 'admin.css' ),
-                'all'
-            );
-        }
-
-        if ( file_exists( $this->dist_path . 'admin.js' ) ) {
-            wp_enqueue_script(
-                'boilerplate-admin-js',
-                $this->dist_uri . 'admin.js',
-                [ 'jquery' ],
-                $this->mod_time( 'admin.js' ),
-                true
-            );
-        }
+    protected function init_classes() {
+        ( new LunchMenu() );
+        ( new LunchMenuBlock() );
+        ( new PageLunchMenusFieldGroup() );
     }
 
     /**
-     * Get cache busting modification time or plugin version.
+     * Add this plugin's models directory to DustPress.
      *
-     * @param string $file File inside assets/dist/ folder.
+     * @param array $models The original array.
      *
-     * @return int|string
+     * @return array
      */
-    private function mod_time( $file = '' ) {
-        return file_exists( $this->dist_path . $file )
-            ? (int) filemtime( $this->dist_path . $file )
-            : $this->version;
+    protected function dustpress_models( array $models = [] ) : array {
+        $models[] = $this->plugin_path . '/src/Models/';
+
+        return $models;
+    }
+
+    /**
+     * Register page-combined-events-list.php template path.
+     *
+     * @param string $template Page template name.
+     *
+     * @return string
+     */
+    private function register_page_template_path( string $template ) : string {
+        if ( get_page_template_slug() === 'page-lunch-menus-list.php' ) {
+            $template = $this->plugin_path . '/src/Models/page-lunch-menus-list.php';
+        }
+
+        return $template;
+    }
+
+    /**
+     * Register page-lunch-menus-list.php making it accessible via page template picker.
+     *
+     * @param array $templates Page template choices.
+     *
+     * @return array
+     */
+    private function register_page_template( $templates ) : array {
+        $templates['page-lunch-menus-list.php'] = __( 'Lounaslista', 'tms-plugin-lunch-menus' );
+
+        return $templates;
+    }
+
+    /**
+     * Add this plugin's partials directory to DustPress.
+     *
+     * @param array $partials The original array.
+     *
+     * @return array
+     */
+    protected function dustpress_partials( array $partials = [] ) : array {
+        $partials[] = $this->plugin_path . '/src/Partials/';
+
+        return $partials;
+    }
+
+    /**
+     * Append lunch menu layout
+     *
+     * @param array $layouts Flexible Content layouts.
+     *
+     * @return array
+     */
+    protected function append_lunch_menu_layout( array $layouts ) : array {
+
+        $layouts[] = LunchMenuLayout::class;
+
+        return $layouts;
+    }
+
+    /**
+     * Format lunch menu file data.
+     *
+     * @param array $data Layout data.
+     *
+     * @return array
+     */
+    protected function format_lunch_menu_data( array $data ) : array {
+
+        $data['menu']       = static::get_menu_of_the_day();
+        $data['no_results'] = __( 'No results', 'tms-plugin-lunch-menus' );
+
+        return $data;
+    }
+
+    /**
+     * Get menu of the day.
+     *
+     * @return array
+     */
+    public static function get_menu_of_the_day() : array {
+
+        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
+        $sunday = date( 'Y-m-d', strtotime( $monday . ' +6 days' ) );
+
+        $args = [
+            'post_type'      => PostType\LunchMenu::SLUG,
+            'posts_per_page' => 1,
+            'orderby'        => 'post_date',
+            'meta_query'     => [
+                'relation' => 'AND',
+                [
+                    'key'     => 'start_datetime',
+                    'value'   => $monday,
+                    'compare' => '>=',
+                    'type'    => 'DATE',
+                ],
+                [
+                    'key'     => 'end_datetime',
+                    'value'   => $sunday,
+                    'compare' => '<=',
+                    'type'    => 'DATE',
+                ],
+            ],
+        ];
+
+        $query = new \WP_Query( $args );
+
+        if ( empty( $query->posts ) ) {
+            return [];
+        }
+
+        $menus = get_field( 'days', $query->posts[0] );
+
+        if ( empty( $menus ) ) {
+            return [];
+        }
+
+        $today = date( 'Y-m-d' );
+
+        foreach ( $menus as $menu ) {
+            if ( $menu['days'] === $today ) {
+                return $menu;
+            }
+        }
+
+        // No menu founds for current day.
+        return [];
     }
 }
