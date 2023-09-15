@@ -31,6 +31,7 @@ $plugin_path = __DIR__;
 Plugin::init( $plugin_version, $plugin_path );
 
 if ( ! function_exists( 'tms_plugin_lunch_menus' ) ) {
+
     /**
      * Get the TMS Lunch Menus plugin instance.
      *

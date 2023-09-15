@@ -135,7 +135,7 @@ class LunchMenu {
             'can_export'          => true,
             'has_archive'         => false,
             'exclude_from_search' => false,
-            'publicly_queryable'  => false,
+            'publicly_queryable'  => true,
             'rewrite'             => $rewrite,
             'capability_type'     => 'lunch_menu',
             'map_meta_cap'        => true,
@@ -206,23 +206,23 @@ class LunchMenu {
      */
     protected function get_event_tab( string $key ) : ?Field\Tab {
         $strings = [
-            'tab'                => 'Lounaslista',
-            'start_datetime'     => [
+            'tab'            => 'Lounaslista',
+            'start_datetime' => [
                 'label'        => 'Aloitusajankohta',
                 'instructions' => '',
             ],
-            'end_datetime'       => [
+            'end_datetime'   => [
                 'label'        => 'Päättymisajankohta',
                 'instructions' => '',
             ],
-            'description'        => [
+            'description'    => [
                 'label'        => 'Lisätiedot',
                 'instructions' => '',
             ],
-            'days'        => [
-                'label'        => 'Päivät',
-                'instructions' => '',
-                'date'        => [
+            'days'           => [
+                'label'            => 'Päivät',
+                'instructions'     => '',
+                'date'             => [
                     'label'        => 'Päivämäärä',
                     'instructions' => '',
                 ],
