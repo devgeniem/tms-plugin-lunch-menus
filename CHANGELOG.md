@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][keep-changelog]
 and this project adheres to [Semantic Versioning][semver].
 
-## [1.0.0] - 2023-09-07
+# Unreleased
+
+TMS-962-2: Register layout to frontpage components.
+# Released
+## [1.0.0] - 2023-09-15
 
 - TMS-962: First stable version.
 

@@ -64,7 +64,7 @@ class PageLunchMenusList extends BaseModel {
         $formatted_items = self::format_lunch_menu_items( $items );
 
         return [
-            'items'   => $formatted_items,
+            'items' => $formatted_items,
         ];
     }
 
@@ -133,8 +133,8 @@ class PageLunchMenusList extends BaseModel {
      */
     public function get_lunch_posts() {
         $args = [
-            'post_type'          => PostType\LunchMenu::SLUG,
-            'orderby'            => 'post_date',
+            'post_type'      => PostType\LunchMenu::SLUG,
+            'orderby'        => 'post_date',
             'posts_per_page' => 999, // phpcs:ignore
         ];
 
@@ -183,7 +183,7 @@ class PageLunchMenusList extends BaseModel {
 
         return array_map( function ( $day ) use ( $days ) {
 
-                $locale = \get_locale();
+                $locale         = \get_locale();
                 $date_formatter = new IntlDateFormatter( $locale, IntlDateFormatter::FULL, IntlDateFormatter::NONE );
                 $date_formatter->setPattern( 'EEEE d.M.' );
 
