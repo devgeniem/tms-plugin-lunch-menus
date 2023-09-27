@@ -144,6 +144,10 @@ final class Plugin {
             \Closure::fromCallable( [ $this, 'append_lunch_menu_layout' ] )
         );
         add_filter(
+            'tms/acf/field/fg_front_page_components_components/layouts',
+            \Closure::fromCallable( [ $this, 'append_lunch_menu_layout' ] )
+        );
+        add_filter(
             'tms/acf/layout/lunch_menu/data',
             \Closure::fromCallable( [ $this, 'format_lunch_menu_data' ] )
         );
