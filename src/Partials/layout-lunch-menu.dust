@@ -9,7 +9,7 @@
                 </div>
             {/image}
             <div class="column is-6 is-5-desktop">
-                <h3 class="content-columns__title h3 mt-0-desktop">Tänään lounaaksi</h3>
+                <h3 class="content-columns__title h3 mt-0-desktop">{today_for_lunch|html}</h3>
                 <div class="content-columns__description mt-6 keep-vertical-spacing">
                     {?menu.foods}
                         <p>{menu.foods|kses}</p>

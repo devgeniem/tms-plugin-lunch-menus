@@ -250,8 +250,9 @@ final class Plugin {
      */
     protected function format_lunch_menu_data( array $data ) : array {
 
-        $data['menu']       = static::get_menu_of_the_day();
-        $data['no_results'] = __( 'No results', 'tms-plugin-lunch-menus' );
+        $data['menu']            = static::get_menu_of_the_day();
+        $data['no_results']      = __( 'No results', 'tms-plugin-lunch-menus' );
+        $data['today_for_lunch'] = __( 'Today for lunch', 'tms-plugin-lunch-menus' );
 
         return $data;
     }
@@ -262,29 +263,10 @@ final class Plugin {
      * @return array
      */
     public static function get_menu_of_the_day() : array {
-
-        $monday = date( 'Y-m-d', strtotime( 'monday this week' ) );
-        $sunday = date( 'Y-m-d', strtotime( $monday . ' +6 days' ) );
-
         $args = [
             'post_type'      => PostType\LunchMenu::SLUG,
-            'posts_per_page' => 1,
+            'posts_per_page' => 999,
             'orderby'        => 'post_date',
-            'meta_query'     => [
-                'relation' => 'AND',
-                [
-                    'key'     => 'start_datetime',
-                    'value'   => $monday,
-                    'compare' => '>=',
-                    'type'    => 'DATE',
-                ],
-                [
-                    'key'     => 'end_datetime',
-                    'value'   => $sunday,
-                    'compare' => '<=',
-                    'type'    => 'DATE',
-                ],
-            ],
         ];
 
         $query = new \WP_Query( $args );
@@ -293,7 +275,20 @@ final class Plugin {
             return [];
         }
 
-        $menus = get_field( 'days', $query->posts[0] );
+        $posts = $query->posts;
+        $current_datetime = \current_datetime()->format('Y-m-d H:i:s');
+
+        foreach ( $posts as $post ) {
+            $start_datetime = \get_field( 'start_datetime', $post );
+            $end_datetime   = \get_field( 'end_datetime', $post );
+
+            // Skip menu if start-time is coming up or end-time is past
+            if ( $current_datetime <= $start_datetime || $current_datetime >= $end_datetime ) {
+                continue;
+            }
+
+            $menus = \get_field( 'days', $post );
+        }
 
         if ( empty( $menus ) ) {
             return [];

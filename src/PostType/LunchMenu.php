@@ -249,22 +249,22 @@ class LunchMenu {
             $tab = ( new Field\Tab( $strings['tab'] ) )
                 ->set_placement( 'left' );
 
-            $start_datetime = ( new Field\DatePicker( $strings['start_datetime']['label'] ) )
+            $start_datetime = ( new Field\DateTimePicker( $strings['start_datetime']['label'] ) )
                 ->set_key( "{$key}_start_datetime" )
                 ->set_name( 'start_datetime' )
                 ->set_required()
                 ->set_instructions( $strings['start_datetime']['instructions'] )
-                ->set_display_format( 'j.n.Y' )
-                ->set_return_format( 'Y-m-d' )
+                ->set_display_format( 'j.n.Y H:i:s' )
+                ->set_return_format( 'Y-m-d H:i:s' )
                 ->redipress_add_queryable( 'start_datetime' );
 
-            $end_datetime = ( new Field\DatePicker( $strings['end_datetime']['label'] ) )
+            $end_datetime = ( new Field\DateTimePicker( $strings['end_datetime']['label'] ) )
                 ->set_key( "{$key}_end_datetime" )
                 ->set_name( 'end_datetime' )
                 ->set_required()
                 ->set_instructions( $strings['end_datetime']['instructions'] )
-                ->set_display_format( 'j.n.Y' )
-                ->set_return_format( 'Y-m-d' )
+                ->set_display_format( 'j.n.Y H:i:s' )
+                ->set_return_format( 'Y-m-d H:i:s' )
                 ->redipress_add_queryable( 'end_datetime' );
 
             $description = ( new Field\Textarea( $strings['description']['label'] ) )

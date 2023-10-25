@@ -85,8 +85,8 @@ class PageLunchMenusList extends BaseModel {
 
         foreach ( $dates as $date ) {
             foreach ( $posts as $post ) {
-                $start_datetime = get_field( 'start_datetime', $post );
-                $end_datetime   = get_field( 'end_datetime', $post );
+                $start_datetime = \get_field( 'start_datetime', $post );
+                $end_datetime   = \get_field( 'end_datetime', $post );
 
                 if ( $date >= $start_datetime && $date <= $end_datetime ) {
 
@@ -112,14 +112,16 @@ class PageLunchMenusList extends BaseModel {
      * @return array
      */
     public function lunch_menu_dates() {
-        $week_count = (int) get_field( 'week_count', \get_the_ID() );
+        $week_count = (int) \get_field( 'week_count', \get_the_ID() );
 
         if ( $week_count === 1 ) {
-            $dates[] = date( 'Y-m-d' );
+            $current_datetime = \current_datetime()->format('Y-m-d H:i:s');
+            $dates[] = $current_datetime;
         }
         else {
             for ( $i = 0; $i < $week_count; $i++ ) {
-                $dates[] = date( 'Y-m-d', strtotime( "+$i week" ) );
+                $date    = \current_datetime()->add( new DateInterval("P{$i}W") );
+                $dates[] = $date->format('Y-m-d H:i:s');
             }
         }
 
@@ -157,13 +159,13 @@ class PageLunchMenusList extends BaseModel {
     public static function format_lunch_menu_items( array $items ) : array {
 
         return array_map( function ( $item ) {
-                return [
-                    'title'       => $item->post_title,
-                    'start'       => date( 'j.n.', strtotime( get_field( 'start_datetime', $item->ID ) ) ),
-                    'end'         => date( 'j.n.Y', strtotime( get_field( 'end_datetime', $item->ID ) ) ),
-                    'description' => get_field( 'description', $item->ID ),
-                    'days'        => self::format_lunch_menu( get_field( 'days', $item->ID ) ?: [] ),
-                ];
+            return [
+                'title'       => $item->post_title,
+                'start'       => date( 'j.n.', strtotime( \get_field( 'start_datetime', $item->ID ) ) ),
+                'end'         => date( 'j.n.Y', strtotime( \get_field( 'end_datetime', $item->ID ) ) ),
+                'description' => \get_field( 'description', $item->ID ),
+                'days'        => self::format_lunch_menu( \get_field( 'days', $item->ID ) ?: [] ),
+            ];
         }, $items );
 
     }
@@ -209,7 +211,7 @@ class PageLunchMenusList extends BaseModel {
      * @return array
      */
     public function components() : array {
-        $content = get_field( 'components' ) ?? [];
+        $content = \get_field( 'components' ) ?? [];
 
         if ( empty( $content ) || ! is_array( $content ) ) {
             return [];
@@ -241,7 +243,7 @@ class PageLunchMenusList extends BaseModel {
             $layout_name       = str_replace( '_', '-', $acf_layout );
             $layout['partial'] = 'layout-' . $layout_name . '.dust';
 
-            $handled[] = apply_filters(
+            $handled[] = \apply_filters(
                 "tms/acf/layout/{$acf_layout}/data",
                 $layout
             );
