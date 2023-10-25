@@ -179,8 +179,9 @@ class LunchMenuBlock {
      */
     public function filter_data( $data, $instance, $block, $content, $is_preview, $post_id ) : array { // phpcs:ignore
 
-        $data['menu']       = Plugin::get_menu_of_the_day();
-        $data['no_results'] = __( 'No results', 'tms-plugin-lunch-menus' );
+        $data['menu']            = Plugin::get_menu_of_the_day();
+        $data['no_results']      = __( 'No results', 'tms-plugin-lunch-menus' );
+        $data['today_for_lunch'] = __( 'Today for lunch', 'tms-plugin-lunch-menus' );
 
         return apply_filters( 'tms/acf/block/' . self::KEY . '/data', $data );
     }

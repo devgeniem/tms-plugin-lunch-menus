@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TMS Materials\n"
-"POT-Creation-Date: 2023-09-06 15:07+0300\n"
+"POT-Creation-Date: 2023-10-25 16:27+0300\n"
 "PO-Revision-Date: 2021-06-15 11:22+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: plugin.php\n"
@@ -22,6 +22,15 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#: src/Blocks/LunchMenuBlock.php:183 src/Models/page-lunch-menus-list.php:51
+#: src/Plugin.php:250
+msgid "No results"
+msgstr ""
+
+#: src/Blocks/LunchMenuBlock.php:184 src/Plugin.php:251
+msgid "Today for lunch"
+msgstr ""
 
 #: src/Fields/PageLunchMenusFieldGroup.php:37
 msgctxt "plugin ACF"
@@ -39,10 +48,6 @@ msgstr ""
 
 #: src/Models/page-lunch-menus-list.php:42
 msgid "Additional information link"
-msgstr ""
-
-#: src/Models/page-lunch-menus-list.php:51
-msgid "No results"
 msgstr ""
 
 #: src/Plugin.php:208

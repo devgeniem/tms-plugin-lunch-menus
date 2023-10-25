@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][keep-changelog]
 and this project adheres to [Semantic Versioning][semver].
 
+## Unreleased
+
+- TMS-987:
+    - Change start_datetime & end_datetime fields to DateTimePicker & add functionalities for time
+    - Fix lunch-block & component not working if start_datetime was before the first lunch date
+
 ## [1.0.0] - 2023-09-15
 
 - TMS-962: First stable version.
