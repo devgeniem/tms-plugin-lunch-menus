@@ -115,13 +115,13 @@ class PageLunchMenusList extends BaseModel {
         $week_count = (int) \get_field( 'week_count', \get_the_ID() );
 
         if ( $week_count === 1 ) {
-            $current_datetime = \current_datetime()->format('Y-m-d H:i:s');
-            $dates[] = $current_datetime;
+            $current_datetime = \current_datetime()->format( 'Y-m-d H:i:s' );
+            $dates[]          = $current_datetime;
         }
         else {
             for ( $i = 0; $i < $week_count; $i++ ) {
-                $date    = \current_datetime()->add( new DateInterval("P{$i}W") );
-                $dates[] = $date->format('Y-m-d H:i:s');
+                $date    = \current_datetime()->add( new DateInterval( "P{$i}W" ) );
+                $dates[] = $date->format( 'Y-m-d H:i:s' );
             }
         }
 
