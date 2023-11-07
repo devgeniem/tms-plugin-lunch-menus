@@ -8,11 +8,11 @@
         </div>
         {/image}
         <div class="column is-6 is-5-desktop">
-            <h3>Tänään lounaaksi</h3>
+            <h3>{today_for_lunch|html}</h3>
             {?menu.foods}
                 <p>{menu.foods|kses}</p>
             {:else}
-                <p>{no_result|kses}</p>
+                <p>{no_results|kses}</p>
             {/menu.foods}
             {?link}
                 <a class="button m-2 button--icon" href="{link.url|url}" href="{link.target|attr}">
