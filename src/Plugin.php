@@ -275,8 +275,8 @@ final class Plugin {
             return [];
         }
 
-        $posts = $query->posts;
-        $current_datetime = \current_datetime()->format('Y-m-d H:i:s');
+        $posts            = $query->posts;
+        $current_datetime = \current_datetime()->format( 'Y-m-d H:i:s' );
 
         foreach ( $posts as $post ) {
             $start_datetime = \get_field( 'start_datetime', $post );

@@ -226,7 +226,7 @@ class LunchMenu {
                     'label'        => 'Päivämäärä',
                     'instructions' => '',
                 ],
-                'foods'        => [
+                'foods'            => [
                     'label'        => 'Ruoat',
                     'instructions' => '',
                 ],
@@ -234,11 +234,11 @@ class LunchMenu {
                     'label'        => 'Lisätiedot',
                     'instructions' => '',
                 ],
-                'link'        => [
+                'link'             => [
                     'label'        => 'Linkki',
                     'instructions' => '',
                 ],
-                'link_title'        => [
+                'link_title'       => [
                     'label'        => 'Linkin teksti',
                     'instructions' => '',
                 ],

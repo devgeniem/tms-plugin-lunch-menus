@@ -33,7 +33,7 @@
                             <hr class="mt-0 mb-8" />
 
                             <div class="column is-6 is-offset-3 pt-0 pb-0 has-text-centered">
-                                <h2>{lunch_menu_title|kses} {start|kses} - {end|kses}</h2>
+                                <h2>{title|kses}</h2>
                                 {?description}
                                     <div class="mt-5">
                                         <p>{description|kses}</p>
