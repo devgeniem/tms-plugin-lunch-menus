@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning][semver].
 
 ## Unreleased
 
+- TMS-1012: Change lunch menus main title
+
 ## [1.1.0] - 2023-11-07
 
 - TMS-987:
