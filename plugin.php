@@ -3,7 +3,7 @@
  * Plugin Name: TMS Lunch Menus
  * Plugin URI: https://github.com/devgeniem/tms-plugin-lunch-menus
  * Description: TMS Lunch Menus list
- * Version: 1.0.0
+ * Version: 1.1.1
  * Requires PHP: 7.4
  * Author: Hion Digital Oy
  * Author URI: https://www.hiondigital.com/
